@@ -965,3 +965,75 @@ mypage.html
 index.html
 
 /home/docker>
+
+
+-----------------------------------------------------------------------------
+
+/home/docker> docker container exec 08497 ls /usr/share/nginx/html
+50x.html
+index.html
+mypage.html
+
+/home/docker> docker container exec ef8d ls /usr/share/nginx/html
+50x.html
+index.html
+
+/home/docker> docker container commit 08497 ping-mycode
+sha256:b723e015b42d98f98b6d9258f323be490a8caec5b214588be6937ce0b2d25568
+
+/home/docker> docker container rm -f 08497 ef8d
+08497
+ef8d
+
+/home/docker> docker container run -d -p 9091:80 ping-mycode
+3a090f357ec0dede51f563bad6fcb7ab2705b89d7f2c855271da5328fdc9c5cc
+
+/home/docker>  docker container exec 3a09 ls /usr/share/nginx/html
+50x.html
+index.html
+mypage.html
+
+/home/docker> docker container exec 3a09 ping -c2 google.com
+PING google.com (216.58.196.174) 56(84) bytes of data.
+64 bytes from maa03s31-in-f14.1e100.net (216.58.196.174): icmp_seq=1 ttl=53 time=39.5 ms
+64 bytes from maa03s31-in-f14.1e100.net (216.58.196.174): icmp_seq=2 ttl=53 time=40.8 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 39.560/40.214/40.868/0.654 ms
+
+/home/docker> docker image ls
+REPOSITORY                                                       TAG                 IMAGE ID            CREATED             SIZE
+ping-mycode                                                      latest              b723e015b42d        3 minutes ago       128MB
+wordpress                                                        php7.1-fpm-alpine   1513c77efb84        13 days ago         130MB
+nginx                                                            latest              f68d6e55e065        13 days ago         109MB
+jenkins/jenkins                                                  lts                 95bf220e341a        4 weeks ago         566MB
+ghost                                                            1-alpine            d92b0a9ac458        5 weeks ago         436MB
+<none>                                                           <none>              bfba26ca350c        5 weeks ago         20.5MB
+mysql                                                            5.7                 98455b9624a9        3 months ago        372MB
+gcr.io/kubernetes-helm/tiller                                    v2.13.0-rc.1        3df95e340abd        5 months ago        82.1MB
+jenkinsci/jenkins                                                lts                 d7c5abfe8477        8 months ago        703MB
+k8s.gcr.io/heapster-amd64                                        v1.5.3              f57c75cd7b0a        14 months ago       75.3MB
+prom/prometheus                                                  v2.1.0              c8ecf7c719c1        18 months ago       112MB
+gcr.io/google_containers/metrics-server-amd64                    v0.2.1              9801395070f3        19 months ago       42.5MB
+k8s.gcr.io/kubernetes-dashboard-amd64                            v1.8.1              e94d2f21bc0c        19 months ago       121MB
+k8s.gcr.io/heapster-amd64                                        v1.5.0              86a0ddc3a8c2        19 months ago       75.3MB
+quay.io/kubernetes-ingress-controller/nginx-ingress-controller   0.9.0               e56d6a14283a        19 months ago       190MB
+gcr.io/google-containers/kube-addon-manager                      v6.5                d166ffa9201a        20 months ago       79.5MB
+k8s.gcr.io/defaultbackend                                        1.4                 846921f0fe0e        20 months ago       4.84MB
+k8s.gcr.io/k8s-dns-sidecar-amd64                                 1.14.5              fed89e8b4248        21 months ago       41.8MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64                                1.14.5              512cd7425a73        21 months ago       49.4MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64                           1.14.5              459944ce8cc4        21 months ago       41.4MB
+k8s.gcr.io/heapster-influxdb-amd64                               v1.3.3              577260d221db        22 months ago       12.5MB
+k8s.gcr.io/heapster-grafana-amd64                                v4.4.3              8cb3de219af7        22 months ago       152MB
+gcr.io/google_containers/pause-amd64                             3.0                 99e59f495ffa        3 years ago         747kB
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              f68d6e55e065        13 days ago         109MB
+
+/home/docker> docker image ls ping-mycode
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ping-mycode         latest              b723e015b42d        3 minutes ago       128MB
+
+/home/docker>
