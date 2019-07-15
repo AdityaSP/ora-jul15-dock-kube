@@ -33,3 +33,247 @@ Server:
  Experimental: false
 
 /home/docker>
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+/home/docker> docker
+
+Usage:  docker COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default
+                           "/home/docker/.docker")
+  -D, --debug              Enable debug mode
+      --help               Print usage
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level
+                           ("debug"|"info"|"warn"|"error"|"fatal")
+                           (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default
+                           "/home/docker/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default
+                           "/home/docker/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default
+                           "/home/docker/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  config      Manage Docker configs
+  container   Manage containers
+  image       Manage images
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker COMMAND --help' for more information on a command.
+
+/home/docker>
+
+/home/docker> docker container ls
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+995c8d481993        quay.io/kubernetes-ingress-controller/nginx-ingress-controller   "/usr/bin/dumb-ini..."   2 hours ago         Up 2 hours                                                                               k8s_nginx-ingress-controller_nginx-ingress-controller-zjd74_kube-system_ab42b3da-2f94-11e9-8d17-080027326ca6_497
+98d83c065a6b        k8s.gcr.io/kubernetes-dashboard-amd64                            "/dashboard --inse..."   2 hours ago         Up 2 hours                                                                               k8s_kubernetes-dashboard_kubernetes-dashboard-77d8b98585-mftdb_kube-system_1806d17c-804a-11e9-a140-080027326ca6_33
+0839b3d5c44c        k8s.gcr.io/k8s-dns-sidecar-amd64                                 "/sidecar --v=2 --..."   2 hours ago         Up 2 hours                                                                               k8s_sidecar_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_33
+85a50da3876f        k8s.gcr.io/defaultbackend                                        "/server"                2 hours ago         Up 2 hours                                                                               k8s_default-http-backend_default-http-backend-cvzhd_kube-system_ab6b020b-2f94-11e9-8d17-080027326ca6_292
+25873554ebf4        k8s.gcr.io/heapster-grafana-amd64                                "/run.sh"                2 hours ago         Up 2 hours                                                                               k8s_grafana_influxdb-grafana-tx55c_kube-system_ab1bc183-2f94-11e9-8d17-080027326ca6_84
+178434eb9864        k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64                           "/dnsmasq-nanny -v..."   2 hours ago         Up 2 hours                                                                               k8s_dnsmasq_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_33
+0546faa6d31f        k8s.gcr.io/k8s-dns-kube-dns-amd64                                "/kube-dns --domai..."   2 hours ago         Up 2 hours                                                                               k8s_kubedns_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_34
+013b8205524d        bfba26ca350c                                                     "nginx -g 'daemon ..."   2 hours ago         Up 2 hours                                                                               k8s_k8s-demo_helloworld-deployment-678d8c9dd4-kgn4q_myspace_e00ab69a-9f07-11e9-a514-080027326ca6_1
+ebce43300c4b        k8s.gcr.io/heapster-amd64                                        "/heapster --sourc..."   2 hours ago         Up 2 hours                                                                               k8s_heapster_heapster-xnbjb_kube-system_aafb3c7c-2f94-11e9-8d17-080027326ca6_84
+7374253455bb        k8s.gcr.io/heapster-influxdb-amd64                               "influxd --config ..."   2 hours ago         Up 2 hours                                                                               k8s_influxdb_influxdb-grafana-tx55c_kube-system_ab1bc183-2f94-11e9-8d17-080027326ca6_88
+3285f524f750        k8s.gcr.io/heapster-grafana-amd64                                "/run.sh"                2 hours ago         Up 2 hours                                                                               k8s_grafana_monitoring-grafana-65757b9656-h4fbs_kube-system_abcaee65-2f94-11e9-8d17-080027326ca6_82
+a93ecd72f3cc        bfba26ca350c                                                     "nginx -g 'daemon ..."   2 hours ago         Up 2 hours                                                                               k8s_k8s-demo_helloworld-deployment-678d8c9dd4-6gsvs_myspace_e009e22f-9f07-11e9-a514-080027326ca6_1
+4918c719d0f8        bfba26ca350c                                                     "nginx -g 'daemon ..."   2 hours ago         Up 2 hours                                                                               k8s_k8s-demo_helloworld-deployment-678d8c9dd4-l6gc8_myspace_2fc89c60-9f07-11e9-a514-080027326ca6_1
+4721cfc3ea93        gcr.io/google_containers/metrics-server-amd64                    "/metrics-server -..."   2 hours ago         Up 2 hours                                                                               k8s_metrics-server_metrics-server-bb9ffc6b8-c4bsh_kube-system_ac742fe8-2f94-11e9-8d17-080027326ca6_18
+fb1db93d008a        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_kube-dns-54cccfbdf8-fm9cn_kube-system_cfc65d88-77aa-11e9-bc85-080027326ca6_31
+4af30c05a885        bfba26ca350c                                                     "nginx -g 'daemon ..."   2 hours ago         Up 2 hours                                                                               k8s_k8s-demo_helloworld-deployment-678d8c9dd4-cmm9t_myspace_e000d98d-9f07-11e9-a514-080027326ca6_1
+58b1984ecd1e        prom/prometheus                                                  "/bin/prometheus -..."   2 hours ago         Up 2 hours                                                                               k8s_prometheus_prometheus-deployment-79c7cf44fc-xdj6l_monitoring_ed3806b7-803f-11e9-a140-080027326ca6_24
+1386a0eb84f9        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_kubernetes-dashboard-77d8b98585-mftdb_kube-system_1806d17c-804a-11e9-a140-080027326ca6_24
+5aac29446c1a        k8s.gcr.io/heapster-amd64                                        "/heapster --sourc..."   2 hours ago         Up 2 hours                                                                               k8s_heapster_heapster-546c9964c6-2w8ld_kube-system_ac314ae9-2f94-11e9-8d17-080027326ca6_84
+ed2e47dd6475        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_influxdb-grafana-tx55c_kube-system_ab1bc183-2f94-11e9-8d17-080027326ca6_84
+73db4a1e1214        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_default-http-backend-cvzhd_kube-system_ab6b020b-2f94-11e9-8d17-080027326ca6_85
+4df1b67ac636        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_helloworld-deployment-678d8c9dd4-kgn4q_myspace_e00ab69a-9f07-11e9-a514-080027326ca6_1
+4761c3be7f69        k8s.gcr.io/heapster-influxdb-amd64                               "influxd --config ..."   2 hours ago         Up 2 hours                                                                               k8s_influxdb_monitoring-influxdb-66946c9f58-h5lhw_kube-system_abf955f0-2f94-11e9-8d17-080027326ca6_85
+8f908eb97d51        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 0.0.0.0:18080->18080/tcp   k8s_POD_nginx-ingress-controller-zjd74_kube-system_ab42b3da-2f94-11e9-8d17-080027326ca6_83
+a82f5506c1b9        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_helloworld-deployment-678d8c9dd4-6gsvs_myspace_e009e22f-9f07-11e9-a514-080027326ca6_1
+028235839ca8        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_monitoring-grafana-65757b9656-h4fbs_kube-system_abcaee65-2f94-11e9-8d17-080027326ca6_83
+cd54e78fd6f1        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_helloworld-deployment-678d8c9dd4-l6gc8_myspace_2fc89c60-9f07-11e9-a514-080027326ca6_1
+d4bc7197e867        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_heapster-xnbjb_kube-system_aafb3c7c-2f94-11e9-8d17-080027326ca6_83
+e6b99cb8f193        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_prometheus-deployment-79c7cf44fc-xdj6l_monitoring_ed3806b7-803f-11e9-a140-080027326ca6_24
+e1271d1555b4        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_heapster-546c9964c6-2w8ld_kube-system_ac314ae9-2f94-11e9-8d17-080027326ca6_83
+7a26ec58b654        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_helloworld-deployment-678d8c9dd4-cmm9t_myspace_e000d98d-9f07-11e9-a514-080027326ca6_1
+c56385ff8e07        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_monitoring-influxdb-66946c9f58-h5lhw_kube-system_abf955f0-2f94-11e9-8d17-080027326ca6_83
+f2141224bce4        gcr.io/google-containers/kube-addon-manager                      "/opt/kube-addons.sh"    2 hours ago         Up 2 hours                                                                               k8s_kube-addon-manager_kube-addon-manager-minikube_kube-system_c4c3188325a93a2d7fb1714e1abf1259_87
+e326c1f8534c        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_metrics-server-bb9ffc6b8-c4bsh_kube-system_ac742fe8-2f94-11e9-8d17-080027326ca6_82
+3a92c782e00c        gcr.io/kubernetes-helm/tiller                                    "/tiller"                2 hours ago         Up 2 hours                                                                               k8s_tiller_tiller-deploy-5b7c59888b-6rbgl_kube-system_42cc5a34-3c10-11e9-a9d7-080027326ca6_326
+d5b03a55410f        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_kube-addon-manager-minikube_kube-system_c4c3188325a93a2d7fb1714e1abf1259_83
+ec9b793222e1        gcr.io/google_containers/pause-amd64:3.0                         "/pause"                 2 hours ago         Up 2 hours                                                                               k8s_POD_tiller-deploy-5b7c59888b-6rbgl_kube-system_42cc5a34-3c10-11e9-a9d7-080027326ca6_76
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+
+/home/docker> docker container run nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+fc7181108d40: Pull complete
+d2e987ca2267: Pull complete
+0b760b431b11: Pull complete
+Digest: sha256:48cbeee0cb0a3b5e885e36222f969e0a2f41819a68e07aeb6631ca7cb356fed1
+Status: Downloaded newer image for nginx:latest
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+
+/home/docker> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                      PORTS                                                                NAMES
+b7045341b764        nginx                                                            "nginx -g 'daemon ..."   13 minutes ago      Exited (0) 36 seconds ago                                                                        laughing_northcutt
+e6450af66e55        wordpress:php7.1-fpm-alpine                                      "docker-entrypoint..."   12 days ago         Exited (137) 12 days ago                                                                         blog-wp
+3774ce39c513        ghost:1-alpine                                                   "docker-entrypoint..."   12 days ago         Exited (255) 12 days ago    0.0.0.0:8989->2368/tcp                                               blog-ghost
+addd5ae08104        mysql:5.7                                                        "docker-entrypoint..."   12 days ago         Exited (255) 12 days ago    3306/tcp, 33060/tcp                                                  blog-db
+
+/home/docker> docker container start b7045341b764
+b7045341b764
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS              PORTS                                                                NAMES
+b7045341b764        nginx                                                            "nginx -g 'daemon ..."   14 minutes ago      Up 3 seconds        80/tcp                                                               laughing_northcutt
+
+/home/docker> docker container start --help
+
+Usage:  docker container start [OPTIONS] CONTAINER [CONTAINER...]
+
+Start one or more stopped containers
+
+Options:
+  -a, --attach               Attach STDOUT/STDERR and forward signals
+      --detach-keys string   Override the key sequence for detaching a
+                             container
+      --help                 Print usage
+  -i, --interactive          Attach container's STDIN
+
+/home/docker> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                     PORTS                                                                NAMES
+b7045341b764        nginx                                                            "nginx -g 'daemon ..."   16 minutes ago      Up 2 minutes               80/tcp                                                               laughing_northcutt
+e6450af66e55        wordpress:php7.1-fpm-alpine                                      "docker-entrypoint..."   12 days ago         Exited (137) 12 days ago                                                                        blog-wp
+3774ce39c513        ghost:1-alpine                                                   "docker-entrypoint..."   12 days ago         Exited (255) 12 days ago   0.0.0.0:8989->2368/tcp                                               blog-ghost
+addd5ae08104        mysql:5.7                                                        "docker-entrypoint..."   12 days ago         Exited (255) 12 days ago   3306/tcp, 33060/tcp                                                  blog-db
+
+/home/docker> docker container rm e6450af66e55
+e6450af66e55
+
+/home/docker> docker container rm b7045341b764
+Error response from daemon: You cannot remove a running container b7045341b76484c123a2a28b1b7155159412f43dc949f5b93764b36b4cdab674. Stop the container before attempting removal or force remove
+
+/home/docker> docker container rm -f b7045341b764
+b7045341b764
+
+/home/docker> docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                                                            COMMAND                  CREATED             STATUS                     PORTS                                                                NAMES
+3774ce39c513        ghost:1-alpine                                                   "docker-entrypoint..."   12 days ago         Exited (255) 12 days ago   0.0.0.0:8989->2368/tcp                                               blog-ghost
+addd5ae08104        mysql:5.7                                                        "docker-entrypoint..."   12 days ago         Exited (255) 12 days ago   3306/tcp, 33060/tcp                                                  blog-db
+
+/home/docker> docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+fff6ed0343ae3d463d9985c423b16fbc670babd9d583ebbb51c88e9cc3ca9e19
+e4ea73d184e98c698875f86fcaa521783f1762e150627776987e645d1fa4fa2f
+25705e3ec51f8cc15d844274c9794d480bdb2893ce54a0e7a066871cf6d1f427
+f95d2ee486eb9f09301e27f5ace3f0258d743d1e303f25331514c76d5010ad5d
+c5d20c73d99394f586d5c62b090f6ae6ba3b5adde60571ce4693d819ad9d26cb
+1f3c4b5f53683a720eaace85775155919c4ceb85a0c4e31629988e07095eb593
+03975a64cebec3db86ffcda955703c5feea0f15fa67dbc7cfc54d41690a72ee0
+bf7b97023969978fe3034ac3afd978d17ce358087f674de4999bacfadb9cb981
+85883c2008effeb7650f445f5d58610b5a69bcab43350b1dde3742244be0a7b9
+d2bf690a66a040735937946ccc65a2d1d8dcccbe5e020d822e8032fcab2f7717
+945b3f8136a58f5cf91e8d64080e4112d513eab9edfd88de9e2226dc5fdc1b88
+f4f8296dad575f13ac5e1c9ac79ff8f8c5571699a5124be49a26858c97ad68c9
+2c8f95950d807a14765fe910a87b9293dec0ea2b6f2f367fcf0951c9c00c7fa1
+8b9c33a2f947a462a44c9e2934612336250310e9b88b453bb0346448ab952126
+160b14fc418b1eb82f43c6cbd830b3ee0e12917e35d8b2c81bf9e792f31e861b
+cc3aa4842a144b54619b67da2e851553f3062b20409bbdb78988de4c9f0344fb
+885ba46c2a8041f44247b66fd10f958653cc9c6002b811f3ce3562b4732d4c1a
+48aaefd7b9f757d0fc175e0d7001c08f018546b4074ae9a5e0917295dd70bf95
+f3a00fbe719789006fe67c5495c46626413085b29d218e301933a8216b46b9bc
+2573a3a607a24005b78811f105a5670247c2a6b33ae3dc29e80fe36c84a19a42
+8979b0303c00c30716bc3a2d2a593b5b5f990e4f4e06ea853731d0630c5bc023
+1e7b06a7b640d9372467ace605d1142a0d256baec7a24d9be293992d846e23e5
+189af45d36dcf4fe013055033d01a681056421883ee4961b1e158f669c2cabac
+bbca0b9c34357d69b720a37de197ed61214bb77138aa968aac0c4bc3c0239aac
+79c63e96434910d6ae2c5da2dd370219cc15b2f34f72cc55f7fa1ad56e71a96a
+0379c8e9cd9a43f121199a7c50f1718fb60485651a053f00a840cb16a287ea0e
+27e5ffead883996eeecf45d5f0a69b489e22f5bfa1194beea9ab0e15405998e8
+2762ba37079a75b83ceeba513bc8c4690194386569c0d5839abf7c0886325f3b
+2a66815fd990fc0b105cca94b7d64c9427c2d22fe9d4a09c5395ddfd4f102a0d
+a5c4a8286450420ec0614798ba9f3501d928f715cd26de39e44f8a3c2fd6a64b
+65e356eda1df985590c11fef0a2a117a9f8032104945dedfa4477f64439324ef
+e31c769e1fdb118c5c021578bd242711a2db2ab5053d46f1b8ca5fddf92ebb86
+435ca4ab0aeb3302ed8af3200d5cdebc99587be376e7dfc9e4a0700cb11a31a0
+83afb022223a5ce03106c36cb456a9d29a1bf95fb61f7f201c9aa6bf14c22476
+0a94547a39aab41a26a64276f212f2f7e5791e27877eaefdf4088b69d9932e26
+58d1a49ff395d892220132964fdb0d00624730918c2a77711f8dbf4f6d7f152b
+3774ce39c51336f6763b01a2e0e43063ef619fe5483742b040ae86fb4968aca4
+addd5ae081046cdf9d0ee49bd8811ba82459973375fb48c265bcb2c01604b8bb
+
+Total reclaimed space: 1.567MB
+
+/home/docker>
