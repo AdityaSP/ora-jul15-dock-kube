@@ -1037,3 +1037,362 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 ping-mycode         latest              b723e015b42d        3 minutes ago       128MB
 
 /home/docker>
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED                             SIZE
+nginx               latest              f68d6e55e065        13 days ago                         109MB
+
+/home/docker> docker image ls ping-mycode
+REPOSITORY          TAG                 IMAGE ID            CREATED                             SIZE
+ping-mycode         latest              b723e015b42d        42 minutes ago                      128MB
+
+/home/docker>
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED                             SIZE
+nginx               latest              f68d6e55e065        13 days ago                         109MB
+
+/home/docker> docker image pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+Digest: sha256:48cbeee0cb0a3b5e885e36222f969e0a2f41819a68e07aeb6631ca7cb356fed1
+Status: Image is up to date for nginx:latest
+
+/home/docker> docker image pull nginx:mainline
+mainline: Pulling from library/nginx
+Digest: sha256:48cbeee0cb0a3b5e885e36222f969e0a2f41819a68e07aeb6631ca7cb356fed1
+Status: Downloaded newer image for nginx:mainline
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED                             SIZE
+nginx               latest              f68d6e55e065        13 days ago                         109MB
+nginx               mainline            f68d6e55e065        13 days ago                         109MB
+
+/home/docker> docker image history nginx
+IMAGE               CREATED             CREATED BY                                                      SIZE                COMMENT
+f68d6e55e065        13 days ago         /bin/sh -c #(nop)  CMD ["nginx" "-g" "da                em...   0B
+<missing>           13 days ago         /bin/sh -c #(nop)  STOPSIGNAL SIGTERM                           0B
+<missing>           13 days ago         /bin/sh -c #(nop)  EXPOSE 80                                    0B
+<missing>           13 days ago         /bin/sh -c ln -sf /dev/stdout /var/log/n                gi...   22B
+<missing>           13 days ago         /bin/sh -c set -x     && addgroup --syst                em...   54.1MB
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV PKG_RELEASE=1~str                etch    0B
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.3                        0B
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.1                7.1     0B
+<missing>           4 weeks ago         /bin/sh -c #(nop)  LABEL maintainer=NGIN                X ...   0B
+<missing>           4 weeks ago         /bin/sh -c #(nop)  CMD ["bash"]                                 0B
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:5ffb798d64089                41...   55.3MB
+
+/home/docker>
+
+/home/docker> docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+f68d6e55e065        13 days ago         /bin/sh -c #(nop)  CMD ["nginx" "-g" "daem...   0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  EXPOSE 80                    0B      
+<missing>           13 days ago         /bin/sh -c ln -sf /dev/stdout /var/log/ngi...   22B     
+<missing>           13 days ago         /bin/sh -c set -x     && addgroup --system...   54.1MB  
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV PKG_RELEASE=1~stretch    0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.3        0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.1     0B      
+<missing>           4 weeks ago         /bin/sh -c #(nop)  LABEL maintainer=NGINX ...   0B      
+<missing>           4 weeks ago         /bin/sh -c #(nop)  CMD ["bash"]                 0B      
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:5ffb798d6408941...   55.3MB  
+
+/home/docker> docker image ls ping-mycode
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ping-mycode         latest              b723e015b42d        About an hour ago   128MB
+
+/home/docker> docker image history ping-mycode
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+b723e015b42d        About an hour ago   nginx -g daemon off;                            19.1MB  
+f68d6e55e065        13 days ago         /bin/sh -c #(nop)  CMD ["nginx" "-g" "daem...   0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  EXPOSE 80                    0B      
+<missing>           13 days ago         /bin/sh -c ln -sf /dev/stdout /var/log/ngi...   22B     
+<missing>           13 days ago         /bin/sh -c set -x     && addgroup --system...   54.1MB  
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV PKG_RELEASE=1~stretch    0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.3        0B      
+<missing>           13 days ago         /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.1     0B      
+<missing>           4 weeks ago         /bin/sh -c #(nop)  LABEL maintainer=NGINX ...   0B      
+<missing>           4 weeks ago         /bin/sh -c #(nop)  CMD ["bash"]                 0B      
+<missing>           4 weeks ago         /bin/sh -c #(nop) ADD file:5ffb798d6408941...   55.3MB  
+
+/home/docker> docker image ls ping-mycode
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ping-mycode         latest              b723e015b42d        About an hour ago   128MB
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              f68d6e55e065        13 days ago         109MB
+nginx               mainline            f68d6e55e065        13 days ago         109MB
+
+/home/docker> docker image inspect ping-mycode
+[
+    {
+        "Id": "sha256:b723e015b42d98f98b6d9258f323be490a8caec5b214588be6937ce0b2d25568",
+        "RepoTags": [
+            "ping-mycode:latest"
+        ],
+        "RepoDigests": [],
+        "Parent": "sha256:f68d6e55e06520f152403e6d96d0de5c9790a89b4cfc99f4626f68146fa1dbdc",
+        "Comment": "",
+        "Created": "2019-07-15T09:31:55.722492065Z",
+        "Container": "08497a14070fd37f78d48260fefe28eee9a02f39305f5bb2c83d338de2db494f",
+        "ContainerConfig": {
+            "Hostname": "08497a14070f",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.1",
+                "NJS_VERSION=0.3.3",
+                "PKG_RELEASE=1~stretch"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "ArgsEscaped": true,
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "DockerVersion": "17.09.0-ce",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.1",
+                "NJS_VERSION=0.3.3",
+                "PKG_RELEASE=1~stretch"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "ArgsEscaped": true,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 128415215,
+        "VirtualSize": 128415215,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/eaa414f7f573719cf2251eed67efeb6bd4f84565ac2587d06bc2c5719662aa16/diff:/var/lib/docker/overlay2/ff6ff0efbe501a50ddd39556df255fe8cad783463912200878e1ac09970d9662/diff:/var/lib/docker/overlay2/b6b043e45f2495698635b27ea950533facad56e315ec23716b9f716f9218d692/diff",
+                "MergedDir": "/var/lib/docker/overlay2/fbe59250ab3b3a446f50dc8e88c0bab23eda88f475ea987be441aa72bdcf4a1b/merged",
+                "UpperDir": "/var/lib/docker/overlay2/fbe59250ab3b3a446f50dc8e88c0bab23eda88f475ea987be441aa72bdcf4a1b/diff",
+                "WorkDir": "/var/lib/docker/overlay2/fbe59250ab3b3a446f50dc8e88c0bab23eda88f475ea987be441aa72bdcf4a1b/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:cf5b3c6798f77b1f78bf4e297b27cfa5b6caa982f04caeb5de7d13c255fd7a1e",
+                "sha256:197c666de9dd65f1c350e2c44628c5d530f366c9edf0197373f8603cf9af9e50",
+                "sha256:d2f0b6dea592c39bfc4f06a1f6502d58a2fa6d9e6b6cf1aaf0d458d5d61d4515",
+                "sha256:281fb742f7efd2769f52527b7023af2fdea65794d7fd0a61575c4fe96596ac5b"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2019-07-15T09:31:55.746124786Z"
+        }
+    }
+]
+
+/home/docker> docker image inspect nginx
+[
+    {
+        "Id": "sha256:f68d6e55e06520f152403e6d96d0de5c9790a89b4cfc99f4626f68146fa1dbdc",
+        "RepoTags": [
+            "nginx:latest",
+            "nginx:mainline"
+        ],
+        "RepoDigests": [
+            "nginx@sha256:48cbeee0cb0a3b5e885e36222f969e0a2f41819a68e07aeb6631ca7cb356fed1"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2019-07-01T21:25:40.051159139Z",
+        "Container": "2aa9b07987cb2b14da48fc2c46389920c877d8d2992978b30c08766b0e024611",
+        "ContainerConfig": {
+            "Hostname": "2aa9b07987cb",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.1",
+                "NJS_VERSION=0.3.3",
+                "PKG_RELEASE=1~stretch"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"nginx\" \"-g\" \"daemon off;\"]"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:b3589c805dd193e4dc7305c2f550112d1c624d5917df39743cbc6edfe603de02",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "DockerVersion": "18.06.1-ce",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.1",
+                "NJS_VERSION=0.3.3",
+                "PKG_RELEASE=1~stretch"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:b3589c805dd193e4dc7305c2f550112d1c624d5917df39743cbc6edfe603de02",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 109357355,
+        "VirtualSize": 109357355,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/ff6ff0efbe501a50ddd39556df255fe8cad783463912200878e1ac09970d9662/diff:/var/lib/docker/overlay2/b6b043e45f2495698635b27ea950533facad56e315ec23716b9f716f9218d692/diff",
+                "MergedDir": "/var/lib/docker/overlay2/eaa414f7f573719cf2251eed67efeb6bd4f84565ac2587d06bc2c5719662aa16/merged",
+                "UpperDir": "/var/lib/docker/overlay2/eaa414f7f573719cf2251eed67efeb6bd4f84565ac2587d06bc2c5719662aa16/diff",
+                "WorkDir": "/var/lib/docker/overlay2/eaa414f7f573719cf2251eed67efeb6bd4f84565ac2587d06bc2c5719662aa16/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:cf5b3c6798f77b1f78bf4e297b27cfa5b6caa982f04caeb5de7d13c255fd7a1e",
+                "sha256:197c666de9dd65f1c350e2c44628c5d530f366c9edf0197373f8603cf9af9e50",
+                "sha256:d2f0b6dea592c39bfc4f06a1f6502d58a2fa6d9e6b6cf1aaf0d458d5d61d4515"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+
+/home/docker>
+
+/home/docker> docker image ls ping-mycode
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ping-mycode         latest              b723e015b42d        About an hour ago   128MB
+
+/home/docker> docker image tag ping-mycode adityaprabhakara/ping-mycode
+
+/home/docker> docker image ls ping-mycode
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ping-mycode         latest              b723e015b42d        About an hour ago   128MB
+
+/home/docker> docker image ls adityaprabhakara/ping-mycode
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/ping-mycode   latest              b723e015b42d        About an hour ago   128MB
+
+/home/docker> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: adityprabhakara
+Password:
+Error response from daemon: Get https://registry-1.docker.io/v2/: unauthorized: incorrect username or password
+
+/home/docker> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: adityaprabhakara
+Password:
+Login Succeeded
+
+/home/docker> docker image push adityaprabhakara/ping-mycode
+The push refers to a repository [docker.io/adityaprabhakara/ping-mycode]
+281fb742f7ef: Pushed
+d2f0b6dea592: Mounted from library/nginx
+197c666de9dd: Mounted from library/nginx
+cf5b3c6798f7: Mounted from library/nginx
+latest: digest: sha256:d263f4b95bed8f932b5ccb293b6ab6a6b482eff8cd60266417dc1dd077501587 size: 1160
+
+/home/docker> #docker image pull adityaprabhakara/ping-mycode:latest
+
+/home/docker>
