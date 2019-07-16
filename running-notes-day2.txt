@@ -192,3 +192,110 @@ b7b28af77ffe        4 days ago          /bin/sh -c #(nop)  CMD ["/bin/sh"]      
 <missing>           4 days ago          /bin/sh -c #(nop) ADD file:0eb5ea35741d23f...   5.58MB  
 
 /c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app>
+
+
+
+---------------------------------------------------------------------------------------------------------------
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> vi mypage.html
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> cat mypage.html
+<h1> My Code </h1>
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> vi Dockerfile
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image build -t app:latest -t app:2 .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> b7b28af77ffe
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> bb5a8c3cbafc
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 2684362080f4
+Step 4/4 : COPY mypage.html /var/www/localhost/htdocs
+ ---> e267448e9366
+Successfully built e267448e9366
+Successfully tagged app:latest
+Successfully tagged app:2
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 2                   e267448e9366        53 seconds ago      10.6MB
+app                 latest              e267448e9366        53 seconds ago      10.6MB
+app                 1                   2684362080f4        33 minutes ago      10.6MB
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image history app
+IMAGE               CREATED              CREATED BY                                      SIZE                COMMENT
+e267448e9366        About a minute ago   /bin/sh -c #(nop) COPY file:1b2e5998c64d1d...   19B    
+2684362080f4        33 minutes ago       /bin/sh -c apk add apache2                      3.6MB  
+bb5a8c3cbafc        33 minutes ago       /bin/sh -c apk update                           1.42MB 
+b7b28af77ffe        4 days ago           /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B     
+<missing>           4 days ago           /bin/sh -c #(nop) ADD file:0eb5ea35741d23f...   5.58MB 
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image history app:1
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+2684362080f4        33 minutes ago      /bin/sh -c apk add apache2                      3.6MB   
+bb5a8c3cbafc        33 minutes ago      /bin/sh -c apk update                           1.42MB  
+b7b28af77ffe        4 days ago          /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B      
+<missing>           4 days ago          /bin/sh -c #(nop) ADD file:0eb5ea35741d23f...   5.58MB  
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> la
+-bash: la: command not found
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> ls
+Dockerfile  mypage.html
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> vi Dockerfile
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+COPY mypage1.html /var/www/localhost/htdocs
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> ls
+Dockerfile  mypage.html
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image build -t app:latest -t app:2 .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> b7b28af77ffe
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> bb5a8c3cbafc
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 2684362080f4
+Step 4/4 : COPY mypage1.html /var/www/localhost/htdocs
+COPY failed: stat /var/lib/docker/tmp/docker-builder176081426/mypage1.html: no such file or directory
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> vi Dockerfile
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image build -t app:latest -t app:2
+"docker image build" requires exactly 1 argument.
+See 'docker image build --help'.
+
+Usage:  docker image build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker image build -t app:latest -t app:2 .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> b7b28af77ffe
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> bb5a8c3cbafc
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 2684362080f4
+Step 4/4 : COPY mypage.html /var/www/localhost/htdocs
+ ---> Using cache
+ ---> e267448e9366
+Successfully built e267448e9366
+Successfully tagged app:latest
+Successfully tagged app:2
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app>
