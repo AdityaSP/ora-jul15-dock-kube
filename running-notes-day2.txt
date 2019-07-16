@@ -1846,3 +1846,26 @@ PING db (172.18.0.3): 56 data bytes
 round-trip min/avg/max = 0.081/0.090/0.099 ms
 
 /home/docker>
+
+
+----------------------------------------------------------------------------------------------------
+
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> cd -
+/home/docker
+
+/home/docker> docker container run -d --network w2-db-net --ip 172.19.0.50 app
+b38605ac9fde27cc148a3c7a2e1ae6e1c7427a963ed611e78434e609c877456b
+docker: Error response from daemon: user specified IP address is supported only when connecting to networks with user configured subnets.
+
+/home/docker> docker network create myownnet --subnet 172.50.0.0/16 --gateway 172.50.0.1
+30da2016f53326a448329507a48407b7da590faf9f157d5629a449d4c140d2e1
+
+/home/docker> docker container run -d --network myownnet --ip 172.50.0.50 app   881c21e553c0a71e7795f6578a899ad7f464f82325be2f82786ec2caff612a0c
+
+/home/docker> docker container inspect 881c2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.50.0.50",
+
+/home/docker>
