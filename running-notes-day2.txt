@@ -1451,3 +1451,17 @@ access.log  error.log
     }
 ]
 
+
+------------------------------------------------------------------------------------
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> docker container run -d -p9595:80 -v "/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app":/var/www/localhost/htdocs app
+17e455601af5d0a2e53da53bd56237774662db0f747c844d60b7c8834473a10d
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> ls
+Dockerfile  mypage.html
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> vi mypage.html
+
+/c/Users/Dell lap/docker-workshop/jul15/ora-jul15-dock-kube/app> cat > newpage.html
+somethng enw here
+^C
