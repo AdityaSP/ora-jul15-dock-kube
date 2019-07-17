@@ -44,11 +44,12 @@ Please stay on C drive while doing this. Also start command prompt as an adminis
 
           Download kubectl from this location
           - For Windows
-          https://storage.googleapis.com/kubernetes-release/release/v1.11.0/bin/windows/amd64/kubectl.exe
+          https://storage.googleapis.com/kubernetes-release/release/v1.15.0/bin/windows/amd64/kubectl.exe
           6. put kubectl in the same location as minikube
           
           - For MacOS
-          curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/darwin/amd64/kubectl
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin/kubectl
           
