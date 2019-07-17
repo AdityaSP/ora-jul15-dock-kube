@@ -109,3 +109,164 @@ Events:
   Normal  Started                116s  kubelet, minikube  Started container
 Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
 λ
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ #kubectl delete pod my-nginx
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl delete -f pod/pod-helloworld.yml
+pod "my-nginx" deleted
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+No resources found.
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get rc
+No resources found.
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       26s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-7xwc2   1/1     Running   0          46s
+helloworld-controller-n6z7v   1/1     Running   0          46s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl delete pod helloworld-controller-n6z7v
+pod "helloworld-controller-n6z7v" deleted
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-4xnjw   1/1     Running   0          11s
+helloworld-controller-7xwc2   1/1     Running   0          2m14s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-4xnjw   1/1     Running   0          93s     172.17.0.19   minikube   <none>           <none>
+helloworld-controller-7xwc2   1/1     Running   0          3m36s   172.17.0.18   minikube   <none>           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl scale rc helloworld-controller --replicas 5
+replicationcontroller/helloworld-controller scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-4xnjw   1/1     Running   0          3m18s
+helloworld-controller-6qsf6   1/1     Running   0          20s
+helloworld-controller-7xwc2   1/1     Running   0          5m21s
+helloworld-controller-nqzwl   1/1     Running   0          20s
+helloworld-controller-wv5ct   1/1     Running   0          20s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl scale rc helloworld-controller --replicas 2
+replicationcontroller/helloworld-controller scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS        RESTARTS   AGE
+helloworld-controller-4xnjw   1/1     Running       0          3m57s
+helloworld-controller-6qsf6   0/1     Terminating   0          59s
+helloworld-controller-7xwc2   1/1     Running       0          6m
+helloworld-controller-nqzwl   0/1     Terminating   0          59s
+helloworld-controller-wv5ct   0/1     Terminating   0          59s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-4xnjw   1/1     Running   0          4m6s
+helloworld-controller-7xwc2   1/1     Running   0          6m9s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller configured
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-4xnjw   1/1     Running   0          10m
+helloworld-controller-65n7g   1/1     Running   0          12s
+helloworld-controller-7c6bf   1/1     Running   0          12s
+helloworld-controller-7xwc2   1/1     Running   0          12m
+helloworld-controller-fcgvk   1/1     Running   0          12s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE    LABELS
+helloworld-controller-4xnjw   1/1     Running   0          12m    app=helloworld
+helloworld-controller-65n7g   1/1     Running   0          117s   app=helloworld
+helloworld-controller-7c6bf   1/1     Running   0          117s   app=helloworld
+helloworld-controller-7xwc2   1/1     Running   0          14m    app=helloworld
+helloworld-controller-fcgvk   1/1     Running   0          117s   app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl delete -f rc/rc-helloworld.yml
+replicationcontroller "helloworld-controller" deleted
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS        RESTARTS   AGE     LABELS
+helloworld-controller-4xnjw   0/1     Terminating   0          15m     app=helloworld
+helloworld-controller-65n7g   0/1     Terminating   0          5m43s   app=helloworld
+helloworld-controller-7xwc2   0/1     Terminating   0          17m     app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+No resources found.
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get rc
+No resources found.
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME       READY   STATUS    RESTARTS   AGE   LABELS
+my-nginx   1/1     Running   0          4s    app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         1       6s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       12s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-9pnd6   1/1     Running   0          21s
+my-nginx                      1/1     Running   0          56s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE   LABELS
+helloworld-controller-9pnd6   1/1     Running   0          38s   app=helloworld
+my-nginx                      1/1     Running   0          73s   app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl delete pod my-nginx
+pod "my-nginx" deleted
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE   LABELS
+helloworld-controller-9pnd6   1/1     Running   0          91s   app=helloworld
+helloworld-controller-cw6lj   1/1     Running   0          12s   app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE    LABELS
+helloworld-controller-9pnd6   1/1     Running   0          2m7s   app=helloworld
+helloworld-controller-cw6lj   1/1     Running   0          48s    app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS        RESTARTS   AGE     LABELS
+helloworld-controller-9pnd6   1/1     Running       0          2m16s   app=helloworld
+helloworld-controller-cw6lj   1/1     Running       0          57s     app=helloworld
+my-nginx                      0/1     Terminating   0          4s      app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ
