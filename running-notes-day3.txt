@@ -1,0 +1,111 @@
+Dell lap@Dell ~
+λ kubectl version
+Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"windows/amd64"}
+Server Version: version.Info{Major:"", Minor:"", GitVersion:"v1.9.0", GitCommit:"925c127ec6b946659ad0fd596fa959be43f0cc05", GitTreeState:"clean", BuildDate:"2018-01-26T19:04:38Z", GoVersion:"go1.9.1", Compiler:"gc", Platform:"linux/amd64"}
+Dell lap@Dell ~
+λ kubectl version
+Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"windows/amd64"}
+Server Version: version.Info{Major:"", Minor:"", GitVersion:"v1.9.0", GitCommit:"925c127ec6b946659ad0fd596fa959be43f0cc05", GitTreeState:"clean", BuildDate:"2018-01-26T19:04:38Z", GoVersion:"go1.9.1", Compiler:"gc", Platform:"linux/amd64"}
+Dell lap@Dell ~
+λ
+Dell lap@Dell ~
+λ kubectl version
+Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"windows/amd64"}
+Server Version: version.Info{Major:"", Minor:"", GitVersion:"v1.9.0", GitCommit:"925c127ec6b946659ad0fd596fa959be43f0cc05", GitTreeState:"clean", BuildDate:"2018-01-26T19:04:38Z", GoVersion:"go1.9.1", Compiler:"gc", Platform:"linux/amd64"}
+Dell lap@Dell ~
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+*         minikube                      minikube     minikube
+Dell lap@Dell ~
+λ kubectl config use-context kubernetes-admin@kubernetes
+Switched to context "kubernetes-admin@kubernetes".
+Dell lap@Dell ~
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+          minikube                      minikube     minikube
+Dell lap@Dell ~
+λ kubectl config use-context minikube
+Switched to context "minikube".
+Dell lap@Dell ~
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+*         minikube                      minikube     minikube
+Dell lap@Dell ~
+λ kubectl version
+Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"windows/amd64"}
+Server Version: version.Info{Major:"", Minor:"", GitVersion:"v1.9.0", GitCommit:"925c127ec6b946659ad0fd596fa959be43f0cc05", GitTreeState:"clean", BuildDate:"2018-01-26T19:04:38Z", GoVersion:"go1.9.1", Compiler:"gc", Platform:"linux/amd64"}
+Dell lap@Dell ~
+λ kubectl get pods
+No resources found.
+Dell lap@Dell ~
+λ kubectl get pod
+No resources found.
+Dell lap@Dell ~
+λ kubectl get po
+No resources found.
+Dell lap@Dell ~
+λ cd docker-workshop/jul15/ora-jul15-dock-kube/k8s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ ls
+dep/  newcluster/  pod/  pv-pvc/  rc/  resource-quota/  service/
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ ls pod
+pod-helloworld.yml
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pod
+NAME       READY   STATUS    RESTARTS   AGE
+my-nginx   1/1     Running   0          51s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe pod my-nginx
+Name:         my-nginx
+Namespace:    default
+Node:         minikube/192.168.99.159
+Start Time:   Wed, 17 Jul 2019 14:17:36 +0530
+Labels:       app=helloworld
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"app":"helloworld"},"name":"my-nginx","namespace":"default"},"spec"...
+Status:       Running
+IP:           172.17.0.18
+Containers:
+  nginx:
+    Container ID:   docker://15c6fb1684f56f63b139fd51480c9b983e5c163a5d26eb5362b36c649454ac90
+    Image:          nginx:alpine
+    Image ID:       docker-pullable://nginx@sha256:17bd1698318e9c0f9ba2c5ed49f53d690684dab7fe3e8019b855c352528d57be
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 17 Jul 2019 14:17:40 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-448nd (ro)
+Conditions:
+  Type           Status
+  Initialized    True
+  Ready          True
+  PodScheduled   True
+Volumes:
+  default-token-448nd:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-448nd
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     <none>
+Events:
+  Type    Reason                 Age   From               Message
+  ----    ------                 ----  ----               -------
+  Normal  Scheduled              2m    default-scheduler  Successfully assigned my-nginx to minikube
+  Normal  SuccessfulMountVolume  118s  kubelet, minikube  MountVolume.SetUp succeeded for volume "default-token-448nd"
+  Normal  Pulled                 117s  kubelet, minikube  Container image "nginx:alpine" already present on machine
+  Normal  Created                116s  kubelet, minikube  Created container
+  Normal  Started                116s  kubelet, minikube  Started container
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ
