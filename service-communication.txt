@@ -1,0 +1,19 @@
+1. outside of k8s cluster (Windows)
+curl 192.168.99.160:31001   --> LB
+
+2. inside of k8s cluster (login to minikube)
+curl 192.168.99.160:31001   --> LB
+curl localhost:31001        --> LB
+curl 172.17.0.4:80          --> Not LB
+curl 10.111.48.79:8888      --> LB
+curl hw-svc:8888
+
+3. from within a container
+curl localhost:80          --> Not LB
+curl 10.111.48.79:8888     --> LB
+curl 192.168.99.160:31001  --> LB
+curl hw-svc:8888           --> LB
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# nslookup hw-svc
+Server:         10.96.0.10#53
+Address:hw-svc.default.svc.cluster.local
+Address: 10.111.48.79
