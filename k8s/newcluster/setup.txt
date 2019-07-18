@@ -1,4 +1,4 @@
-1. Vagrant installation from 
+1. Vagrant installation from https://www.vagrantup.com/downloads.html
 Click through installation of vagrant
 
 2. Only for old windows machines
