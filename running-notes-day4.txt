@@ -796,3 +796,154 @@ nameserver 10.96.0.10
 search default.svc.cluster.local svc.cluster.local cluster.local
 options ndots:5
 root@helloworld-dep-6b5cd64d8d-5f9rz:/#
+
+
+λ kubectl apply -f blog/blog-db.yml
+deployment.extensions/blog-db-dep created
+service/blog-db-svc created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                           READY   STATUS    RESTARTS   AGE
+blog-db-dep-7c8f99fccd-9rdbd   1/1     Running   0          35s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe service/blog-db-svc
+Name:              blog-db-svc
+Namespace:         default
+Labels:            <none>
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-db-svc","namespace":"default"},"spec":{"ports":[{"port":8888...
+Selector:          blog=blog-db
+Type:              ClusterIP
+IP:                10.102.127.157
+Port:              <unset>  8888/TCP
+TargetPort:        dbport/TCP
+Endpoints:         172.17.0.3:3306
+Session Affinity:  None
+Events:            <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                           READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+blog-db-dep-7c8f99fccd-9rdbd   1/1     Running   0          68s   172.17.0.3   minikube   <none>
+           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-ghost.yml
+service/blog-ghost-svc created
+Error from server (BadRequest): error when creating "blog/blog-ghost.yml": Deployment in version "v1beta1" cannot be handled as a Deployment: v1beta1.Deployment: Spec: v1beta1.DeploymentSpec: Template: v1.PodTemplateSpec: Spec: v1.PodSpec: Containers: []v1.Container: v1.Container: Env: []v1.EnvVar: v1.EnvVar: Value: ReadString: expects " or n, parsing 1244 ...,"value":8... at {"apiVersion":"extensions/v1beta1","kind":"Deployment","metadata":{"annotations":{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"blog-ghost-dep\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"template\":{\"metadata\":{\"labels\":{\"blog\":\"blog-ghost\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"database__client\",\"value\":\"mysql\"},{\"name\":\"database__connection__host\",\"value\":\"blog-db-svc\"},{\"name\":\"database__connection__port\",\"value\":8888},{\"name\":\"database__connection__user\",\"value\":\"root\"},{\"name\":\"database__connection__password\",\"value\":\"welcome\"},{\"name\":\"database__connection__database\",\"value\":\"ghost\"}],\"image\":\"ghost:1-alpine\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"ghost\",\"ports\":[{\"containerPort\":2368,\"name\":\"ghostport\"}]}]}}}}\n"},"name":"blog-ghost-dep","namespace":"default"},"spec":{"replicas":1,"template":{"metadata":{"labels":{"blog":"blog-ghost"}},"spec":{"containers":[{"env":[{"name":"database__client","value":"mysql"},{"name":"database__connection__host","value":"blog-db-svc"},{"name":"database__connection__port","value":8888},{"name":"database__connection__user","value":"root"},{"name":"database__connection__password","value":"welcome"},{"name":"database__connection__database","value":"ghost"}],"image":"ghost:1-alpine","imagePullPolicy":"IfNotPresent","name":"ghost","ports":[{"containerPort":2368,"name":"ghostport"}]}]}}}}
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-ghost.yml
+deployment.extensions/blog-ghost-dep created
+service/blog-ghost-svc unchanged
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+blog-db-dep-7c8f99fccd-9rdbd      1/1     Running   0          6m10s
+blog-ghost-dep-7b7cc4b9f8-xpjlw   1/1     Running   0          17s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe svc blog-ghost-svc
+Name:                     blog-ghost-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-ghost-svc","namespace":"default"},"spec":{"ports":[{"nodePor...
+Selector:                 blog=blog-ghost
+Type:                     NodePort
+IP:                       10.107.185.215
+Port:                     <unset>  8888/TCP
+TargetPort:               ghostport/TCP
+NodePort:                 <unset>  32001/TCP
+Endpoints:                172.17.0.4:2368
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe svc blog-ghost-svc
+Name:                     blog-ghost-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-ghost-svc","namespace":"default"},"spec":{"ports":[{"nodePor...
+Selector:                 blog=blog-ghost
+Type:                     NodePort
+IP:                       10.107.185.215
+Port:                     <unset>  8888/TCP
+TargetPort:               ghostport/TCP
+NodePort:                 <unset>  32001/TCP
+Endpoints:                172.17.0.4:2368
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+blog-db-dep-7c8f99fccd-9rdbd      1/1     Running   0          7m11s
+blog-ghost-dep-7b7cc4b9f8-xpjlw   1/1     Running   0          78s
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl logs -f blog-ghost-dep-7b7cc4b9f8-xpjlw
+[2019-07-18 07:04:51] INFO Creating table: posts
+[2019-07-18 07:04:54] INFO Creating table: users
+[2019-07-18 07:05:10] INFO Creating table: posts_authors
+[2019-07-18 07:05:17] INFO Creating table: roles
+[2019-07-18 07:05:18] INFO Creating table: roles_users
+[2019-07-18 07:05:19] INFO Creating table: permissions
+[2019-07-18 07:05:19] INFO Creating table: permissions_users
+[2019-07-18 07:05:20] INFO Creating table: permissions_roles
+[2019-07-18 07:05:20] INFO Creating table: permissions_apps
+[2019-07-18 07:05:20] INFO Creating table: settings
+[2019-07-18 07:05:24] INFO Creating table: tags
+[2019-07-18 07:05:26] INFO Creating table: posts_tags
+[2019-07-18 07:05:27] INFO Creating table: apps
+[2019-07-18 07:05:28] INFO Creating table: app_settings
+[2019-07-18 07:05:29] INFO Creating table: app_fields
+[2019-07-18 07:05:29] INFO Creating table: clients
+[2019-07-18 07:05:29] INFO Creating table: client_trusted_domains
+[2019-07-18 07:05:30] INFO Creating table: accesstokens
+[2019-07-18 07:05:33] INFO Creating table: refreshtokens
+[2019-07-18 07:05:35] INFO Creating table: subscribers
+[2019-07-18 07:05:35] INFO Creating table: invites
+[2019-07-18 07:05:35] INFO Creating table: brute
+[2019-07-18 07:05:37] INFO Creating table: webhooks
+[2019-07-18 07:05:39] INFO Model: Tag
+[2019-07-18 07:05:39] INFO Model: Client
+[2019-07-18 07:05:40] INFO Model: Role
+[2019-07-18 07:05:40] INFO Model: Permission
+[2019-07-18 07:05:41] INFO Model: User
+[2019-07-18 07:05:52] INFO Model: Post
+[2019-07-18 07:06:03] INFO Relation: Role to Permission
+[2019-07-18 07:06:03] INFO Relation: Post to Tag
+[2019-07-18 07:06:03] INFO Relation: User to Role
+[2019-07-18 07:06:04] INFO Finished database migration!
+[2019-07-18 07:06:32] WARN Theme's file locales/en.json not found.
+[2019-07-18 07:06:34] INFO Ghost is running in production...
+[2019-07-18 07:06:34] INFO Your blog is now available on http://localhost:2368/
+[2019-07-18 07:06:34] INFO Ctrl+C to shut down
+[2019-07-18 07:06:34] INFO Ghost boot 29.087s
+[2019-07-18 07:06:56] INFO "GET /" 200 14052ms
+[2019-07-18 07:06:56] INFO "GET /assets/built/screen.css?v=1a0dec4701" 200 83ms
+[2019-07-18 07:06:57] INFO "GET /public/ghost-sdk.min.js?v=1a0dec4701" 200 884ms
+[2019-07-18 07:06:59] INFO "GET /assets/js/jquery.fitvids.js?v=1a0dec4701" 200 1452ms
+[2019-07-18 07:07:00] INFO "GET /assets/js/infinitescroll.js?v=1a0dec4701" 200 2404ms
+[2019-07-18 07:07:00] INFO "GET /favicon.ico" 200 178ms
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                              READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+blog-db-dep-7c8f99fccd-9rdbd      1/1     Running   0          9m55s   172.17.0.3   minikube   <none>           <none>
+blog-ghost-dep-7b7cc4b9f8-xpjlw   1/1     Running   0          4m2s    172.17.0.4   minikube   <none>           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe svc blog-ghost-svc
+Name:                     blog-ghost-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-ghost-svc","namespace":"default"},"spec":{"ports":[{"nodePor...
+Selector:                 blog=blog-ghost
+Type:                     NodePort
+IP:                       10.107.185.215
+Port:                     <unset>  8888/TCP
+TargetPort:               ghostport/TCP
+NodePort:                 <unset>  32001/TCP
+Endpoints:                172.17.0.4:2368
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ
