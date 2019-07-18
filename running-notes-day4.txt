@@ -1,0 +1,798 @@
+λ kubectl get rs
+NAME                        DESIRED   CURRENT
+helloworld-dep-5cdb68cc76   10        10
+helloworld-dep-6bbc9d5b5    0         0
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout undo deploy helloworld-dep -
+deployment.extensions/helloworld-dep rolled ba
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout undo deploy helloworld-dep -
+error: unable to find specified revision 2 in
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+3         <none>
+4         <none>
+
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get rs
+NAME                        DESIRED   CURRENT
+helloworld-dep-5cdb68cc76   6         6
+helloworld-dep-6bbc9d5b5    5         5
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get rs
+NAME                        DESIRED   CURRENT
+helloworld-dep-5cdb68cc76   3         3
+helloworld-dep-6bbc9d5b5    8         8
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get rs
+NAME                        DESIRED   CURRENT
+helloworld-dep-5cdb68cc76   0         0
+helloworld-dep-6bbc9d5b5    10        10
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep configure
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+3         <none>
+4         <none>
+5         <none>
+
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl create -f pod/pod-helloworld.yml
+pod/my-nginx created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods
+NAME                              READY   STAT
+helloworld-dep-6b5cd64d8d-29wlr   1/1     Runn
+helloworld-dep-6b5cd64d8d-4zbxm   1/1     Runn
+helloworld-dep-6b5cd64d8d-5x6nm   1/1     Runn
+helloworld-dep-6b5cd64d8d-jff7k   1/1     Runn
+helloworld-dep-6b5cd64d8d-jqzgj   1/1     Runn
+helloworld-dep-6b5cd64d8d-rtr4n   1/1     Runn
+helloworld-dep-6b5cd64d8d-v6cmq   1/1     Runn
+helloworld-dep-6b5cd64d8d-vnv5g   1/1     Runn
+helloworld-dep-6b5cd64d8d-vsk86   1/1     Runn
+helloworld-dep-6b5cd64d8d-w4v5t   1/1     Runn
+my-nginx                          1/1     Runn
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl create -f pod/pod-helloworld.yml
+Error from server (AlreadyExists): error when
+ already exists
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl apply -f pod/pod-helloworld.yml
+Warning: kubectl apply should be used on resou
+ or kubectl apply
+pod/my-nginx configured
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get -o wide my-nginx
+error: the server doesn't have a resource type
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pod -o yaml my-nginx
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configu
+      {"apiVersion":"v1","kind":"Pod","metadat
+,"name":"my-nginx","namespace":"default"},"spe
+nginx","ports":[{"containerPort":80,"name":"ng
+  creationTimestamp: "2019-07-18T04:47:16Z"
+  labels:
+    app: helloworld
+  name: my-nginx
+  namespace: default
+  resourceVersion: "2403991"
+  selfLink: /api/v1/namespaces/default/pods/my
+  uid: 1e3fb62e-a917-11e9-8c88-080027326ca6
+spec:
+  containers:
+  - image: nginx:alpine
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    ports:
+    - containerPort: 80
+      name: nginxport
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-l
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.i
+      name: default-token-448nd
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  nodeName: minikube
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: default-token-448nd
+    secret:
+      defaultMode: 420
+      secretName: default-token-448nd
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2019-07-18T04:47:16Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2019-07-18T04:47:19Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2019-07-18T04:47:16Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://97384d3ff84b74fdd4a9
+    image: nginx:alpine
+    imageID: docker-pullable://nginx@sha256:17
+c352528d57be
+    lastState: {}
+    name: nginx
+    ready: true
+    restartCount: 0
+    state:
+      running:
+        startedAt: "2019-07-18T04:47:18Z"
+  hostIP: 192.168.99.160
+  phase: Running
+  podIP: 172.17.0.28
+  qosClass: BestEffort
+  startTime: "2019-07-18T04:47:16Z"
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl history rollout
+Error: unknown command "history" for "kubectl"
+Run 'kubectl --help' for usage.
+unknown command "history" for "kubectl"
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl history rollout deploy helloworld-de
+Error: unknown command "history" for "kubectl"
+Run 'kubectl --help' for usage.
+unknown command "history" for "kubectl"
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+3         <none>
+4         <none>
+5         <none>
+
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl rollout history deploy helloworld-de
+deployment.extensions/helloworld-dep with revi
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=2617820848
+  Containers:
+   web:
+    Image:      nginx:mainline
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods
+NAME                              READY   STAT
+helloworld-dep-6b5cd64d8d-29wlr   1/1     Runn
+helloworld-dep-6b5cd64d8d-4zbxm   1/1     Runn
+helloworld-dep-6b5cd64d8d-5x6nm   1/1     Runn
+helloworld-dep-6b5cd64d8d-jff7k   1/1     Runn
+helloworld-dep-6b5cd64d8d-jqzgj   1/1     Runn
+helloworld-dep-6b5cd64d8d-rtr4n   1/1     Runn
+helloworld-dep-6b5cd64d8d-v6cmq   1/1     Runn
+helloworld-dep-6b5cd64d8d-vnv5g   1/1     Runn
+helloworld-dep-6b5cd64d8d-vsk86   1/1     Runn
+helloworld-dep-6b5cd64d8d-w4v5t   1/1     Runn
+my-nginx                          1/1     Runn
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl delete pod my-nginx
+pod "my-nginx" deleted
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods
+NAME                              READY   STAT
+helloworld-dep-6b5cd64d8d-v6cmq   1/1     Runn
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl apply -f service/svc-helloworld.yml
+service/hw-svc created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get svc
+NAME         TYPE        CLUSTER-IP     EXTERN
+hw-svc       NodePort    10.111.48.79   <none>
+kubernetes   ClusterIP   10.96.0.1      <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.111.48.79
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.17:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods -o wide
+NAME                              READY   STAT
+MINATED NODE   READINESS GATES
+helloworld-dep-6b5cd64d8d-v6cmq   1/1     Runn
+one>           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods -o wide --show-labels
+NAME                              READY   STAT
+MINATED NODE   READINESS GATES   LABELS
+helloworld-dep-6b5cd64d8d-v6cmq   1/1     Runn
+one>           <none>            app=helloworl
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods -o wide --show-labels
+NAME                              READY   STAT
+  NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-6b5cd64d8d-v6cmq   0/1     Term
+  <none>           <none>            app=hello
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods -o wide --show-labels
+No resources found.
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.111.48.79
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                <none>
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.111.48.79
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.3:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl scale deploy helloworld-dep --replic
+deployment.extensions/helloworld-dep scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods -o wide --show-labels
+NAME                              READY   STAT
+INATED NODE   READINESS GATES   LABELS
+helloworld-dep-6b5cd64d8d-5f9rz   1/1     Runn
+ne>           <none>            app=helloworld
+helloworld-dep-6b5cd64d8d-7pkcb   1/1     Runn
+ne>           <none>            app=helloworld
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.i
+                            {"apiVersion":"v1"
+me":"hw-svc","namespace":"default"},"spec":{"p
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.111.48.79
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.3:80,172.17
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ kubectl get pods -o wide --show-labels
+NAME                              READY   STAT
+OMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-6b5cd64d8d-5f9rz   1/1     Runn
+none>           <none>            app=hellowor
+helloworld-dep-6b5cd64d8d-7pkcb   1/1     Runn
+none>           <none>            app=hellowor
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul1
+λ curl 192.168.99.160:31001
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -o wide --show-labels
+NAME                              READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-6b5cd64d8d-5f9rz   1/1     Running   0          20m   172.17.0.4   minikube   <none>           <none>            app=helloworld,pod-template-hash=2617820848
+helloworld-dep-6b5cd64d8d-7pkcb   1/1     Running   0          21m   172.17.0.3   minikube   <none>           <none>            app=helloworld,pod-template-hash=2617820848
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -o wide --show-labels
+NAME                              READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-6b5cd64d8d-5f9rz   1/1     Running   0          23m   172.17.0.4   minikube   <none>           <none>            app=helloworld,pod-template-hash=2617820848
+helloworld-dep-6b5cd64d8d-7pkcb   1/1     Running   0          24m   172.17.0.3   minikube   <none>           <none>            app=helloworld,pod-template-hash=2617820848
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl exec -it helloworld-dep-6b5cd64d8d-5f9rz sh
+# bash
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# curl
+bash: curl: command not found
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# apt-get update
+Get:2 http://security-cdn.debian.org/debian-security stretch/updates InRelease [94.3 kB]
+Ign:1 http://cdn-fastly.deb.debian.org/debian stretch InRelease
+Get:3 http://cdn-fastly.deb.debian.org/debian stretch-updates InRelease [91.0 kB]
+Get:4 http://cdn-fastly.deb.debian.org/debian stretch Release [118 kB]
+Get:5 http://cdn-fastly.deb.debian.org/debian stretch Release.gpg [2434 B]
+Get:6 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 Packages [499 kB]
+Get:7 http://cdn-fastly.deb.debian.org/debian stretch-updates/main amd64 Packages [27.4 kB]
+Get:8 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 Packages [7082 kB]
+Fetched 7915 kB in 10s (733 kB/s)
+Reading package lists... Done
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# apt-get install curl
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  ca-certificates krb5-locales libcurl3 libffi6 libgmp10 libgnutls30 libgssapi-krb5-2
+  libhogweed4 libidn11 libidn2-0 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+  libldap-2.4-2 libldap-common libnettle6 libnghttp2-14 libp11-kit0 libpsl5 librtmp1
+  libsasl2-2 libsasl2-modules libsasl2-modules-db libssh2-1 libssl1.0.2 libtasn1-6
+  libunistring0 openssl publicsuffix
+Suggested packages:
+  gnutls-bin krb5-doc krb5-user libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
+  libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql
+The following NEW packages will be installed:
+  ca-certificates curl krb5-locales libcurl3 libffi6 libgmp10 libgnutls30 libgssapi-krb5-2
+  libhogweed4 libidn11 libidn2-0 libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0
+  libldap-2.4-2 libldap-common libnettle6 libnghttp2-14 libp11-kit0 libpsl5 librtmp1
+  libsasl2-2 libsasl2-modules libsasl2-modules-db libssh2-1 libssl1.0.2 libtasn1-6
+  libunistring0 openssl publicsuffix
+0 upgraded, 31 newly installed, 0 to remove and 2 not upgraded.
+Need to get 6626 kB of archives.
+After this operation, 16.9 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 libssl1.0.2 amd64 1.0.2s-1~deb9u1 [1302 kB]
+Get:2 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 krb5-locales all 1.15-1+deb9u1 [93.8 kB]
+Get:4 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libgmp10 amd64 2:6.1.2+dfsg-1 [253 kB]
+Get:5 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libnettle6 amd64 3.3-1+b2 [192 kB]
+Get:6 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libhogweed4 amd64 3.3-1+b2 [136 kB]
+Get:7 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libidn11 amd64 1.33-1 [115 kB] Get:8 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libffi6 amd64 3.2.1-6 [20.4 kB]Get:9 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libp11-kit0 amd64 0.23.3-2 [111 kB]
+Get:10 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libtasn1-6 amd64 4.10-1.1+deb9u1 [50.6 kB]
+Get:11 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libgnutls30 amd64 3.5.8-5+deb9u4 [896 kB]
+Get:12 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libkeyutils1 amd64 1.5.9-9 [12.4 kB]
+Get:13 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libkrb5support0 amd64 1.15-1+deb9u1 [61.9 kB]
+Get:14 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libk5crypto3 amd64 1.15-1+deb9u1 [119 kB]
+Get:15 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libkrb5-3 amd64 1.15-1+deb9u1 [311 kB]
+Get:16 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libgssapi-krb5-2 amd64 1.15-1+deb9u1 [155 kB]
+Get:17 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libsasl2-modules-db amd64 2.1.27~101-g0780600+dfsg-3 [68.2 kB]
+Get:18 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libsasl2-2 amd64 2.1.27~101-g0780600+dfsg-3 [105 kB]
+Get:3 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 openssl amd64 1.1.0k-1~deb9u1 [747 kB]
+Get:19 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libldap-common all 2.4.44+dfsg-5+deb9u2 [85.5 kB]
+Get:20 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libldap-2.4-2 amd64 2.4.44+dfsg-5+deb9u2 [219 kB]
+Get:21 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 ca-certificates all 20161130+nmu1+deb9u1 [182 kB]
+Get:22 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libunistring0 amd64 0.9.6+really0.9.3-0.1 [279 kB]
+Get:23 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libidn2-0 amd64 0.16-1+deb9u1 [60.7 kB]
+Get:24 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libnghttp2-14 amd64 1.18.1-1 [79.1 kB]
+Get:25 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libpsl5 amd64 0.17.0-3 [41.8 kB]
+Get:26 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-1+b1 [60.4 kB]
+Get:27 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libssh2-1 amd64 1.7.0-1+deb9u1 [139 kB]
+Get:28 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libcurl3 amd64 7.52.1-5+deb9u9 [292 kB]
+Get:29 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 curl amd64 7.52.1-5+deb9u9 [227 kB]
+Get:30 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libsasl2-modules amd64 2.1.27~101-g0780600+dfsg-3 [102 kB]
+Get:31 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 publicsuffix all 20190415.1030-0+deb9u1 [108 kB]
+Fetched 6626 kB in 8s (818 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libssl1.0.2:amd64.
+(Reading database ... 7034 files and directories currently installed.)
+Preparing to unpack .../00-libssl1.0.2_1.0.2s-1~deb9u1_amd64.deb ...
+Unpacking libssl1.0.2:amd64 (1.0.2s-1~deb9u1) ...
+Selecting previously unselected package krb5-locales.
+Preparing to unpack .../01-krb5-locales_1.15-1+deb9u1_all.deb ...
+Unpacking krb5-locales (1.15-1+deb9u1) ...
+Selecting previously unselected package libgmp10:amd64.
+Preparing to unpack .../02-libgmp10_2%3a6.1.2+dfsg-1_amd64.deb ...
+Unpacking libgmp10:amd64 (2:6.1.2+dfsg-1) ...
+Selecting previously unselected package libnettle6:amd64.
+Preparing to unpack .../03-libnettle6_3.3-1+b2_amd64.deb ...
+Unpacking libnettle6:amd64 (3.3-1+b2) ...
+Selecting previously unselected package libhogweed4:amd64.
+Preparing to unpack .../04-libhogweed4_3.3-1+b2_amd64.deb ...
+Unpacking libhogweed4:amd64 (3.3-1+b2) ...
+Selecting previously unselected package libidn11:amd64.
+Preparing to unpack .../05-libidn11_1.33-1_amd64.deb ...
+Unpacking libidn11:amd64 (1.33-1) ...
+Selecting previously unselected package libffi6:amd64.
+Preparing to unpack .../06-libffi6_3.2.1-6_amd64.deb ...
+Unpacking libffi6:amd64 (3.2.1-6) ...
+Selecting previously unselected package libp11-kit0:amd64.
+Preparing to unpack .../07-libp11-kit0_0.23.3-2_amd64.deb ...
+Unpacking libp11-kit0:amd64 (0.23.3-2) ...
+Selecting previously unselected package libtasn1-6:amd64.
+Preparing to unpack .../08-libtasn1-6_4.10-1.1+deb9u1_amd64.deb ...
+Unpacking libtasn1-6:amd64 (4.10-1.1+deb9u1) ...
+Selecting previously unselected package libgnutls30:amd64.
+Preparing to unpack .../09-libgnutls30_3.5.8-5+deb9u4_amd64.deb ...
+Unpacking libgnutls30:amd64 (3.5.8-5+deb9u4) ...
+Selecting previously unselected package libkeyutils1:amd64.
+Preparing to unpack .../10-libkeyutils1_1.5.9-9_amd64.deb ...
+Unpacking libkeyutils1:amd64 (1.5.9-9) ...
+Selecting previously unselected package libkrb5support0:amd64.
+Preparing to unpack .../11-libkrb5support0_1.15-1+deb9u1_amd64.deb ...
+Unpacking libkrb5support0:amd64 (1.15-1+deb9u1) ...
+Selecting previously unselected package libk5crypto3:amd64.
+Preparing to unpack .../12-libk5crypto3_1.15-1+deb9u1_amd64.deb ...
+Unpacking libk5crypto3:amd64 (1.15-1+deb9u1) ...
+Selecting previously unselected package libkrb5-3:amd64.
+Preparing to unpack .../13-libkrb5-3_1.15-1+deb9u1_amd64.deb ...
+Unpacking libkrb5-3:amd64 (1.15-1+deb9u1) ...
+Selecting previously unselected package libgssapi-krb5-2:amd64.
+Preparing to unpack .../14-libgssapi-krb5-2_1.15-1+deb9u1_amd64.deb ...
+Unpacking libgssapi-krb5-2:amd64 (1.15-1+deb9u1) ...
+Selecting previously unselected package libsasl2-modules-db:amd64.
+Preparing to unpack .../15-libsasl2-modules-db_2.1.27~101-g0780600+dfsg-3_amd64.deb ...
+Unpacking libsasl2-modules-db:amd64 (2.1.27~101-g0780600+dfsg-3) ...
+Selecting previously unselected package libsasl2-2:amd64.
+Preparing to unpack .../16-libsasl2-2_2.1.27~101-g0780600+dfsg-3_amd64.deb ...
+Unpacking libsasl2-2:amd64 (2.1.27~101-g0780600+dfsg-3) ...
+Selecting previously unselected package libldap-common.
+Preparing to unpack .../17-libldap-common_2.4.44+dfsg-5+deb9u2_all.deb ...
+Unpacking libldap-common (2.4.44+dfsg-5+deb9u2) ...
+Selecting previously unselected package libldap-2.4-2:amd64.
+Preparing to unpack .../18-libldap-2.4-2_2.4.44+dfsg-5+deb9u2_amd64.deb ...
+Unpacking libldap-2.4-2:amd64 (2.4.44+dfsg-5+deb9u2) ...
+Selecting previously unselected package openssl.
+Preparing to unpack .../19-openssl_1.1.0k-1~deb9u1_amd64.deb ...
+Unpacking openssl (1.1.0k-1~deb9u1) ...
+Selecting previously unselected package ca-certificates.
+Preparing to unpack .../20-ca-certificates_20161130+nmu1+deb9u1_all.deb ...
+Unpacking ca-certificates (20161130+nmu1+deb9u1) ...
+Selecting previously unselected package libunistring0:amd64.
+Preparing to unpack .../21-libunistring0_0.9.6+really0.9.3-0.1_amd64.deb ...
+Unpacking libunistring0:amd64 (0.9.6+really0.9.3-0.1) ...
+Selecting previously unselected package libidn2-0:amd64.
+Preparing to unpack .../22-libidn2-0_0.16-1+deb9u1_amd64.deb ...
+Unpacking libidn2-0:amd64 (0.16-1+deb9u1) ...
+Selecting previously unselected package libnghttp2-14:amd64.
+Preparing to unpack .../23-libnghttp2-14_1.18.1-1_amd64.deb ...
+Unpacking libnghttp2-14:amd64 (1.18.1-1) ...
+Selecting previously unselected package libpsl5:amd64.
+Preparing to unpack .../24-libpsl5_0.17.0-3_amd64.deb ...
+Unpacking libpsl5:amd64 (0.17.0-3) ...
+Selecting previously unselected package librtmp1:amd64.
+Preparing to unpack .../25-librtmp1_2.4+20151223.gitfa8646d.1-1+b1_amd64.deb ...
+Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-1+b1) ...
+Selecting previously unselected package libssh2-1:amd64.
+Preparing to unpack .../26-libssh2-1_1.7.0-1+deb9u1_amd64.deb ...
+Unpacking libssh2-1:amd64 (1.7.0-1+deb9u1) ...
+Selecting previously unselected package libcurl3:amd64.
+Preparing to unpack .../27-libcurl3_7.52.1-5+deb9u9_amd64.deb ...
+Unpacking libcurl3:amd64 (7.52.1-5+deb9u9) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../28-curl_7.52.1-5+deb9u9_amd64.deb ...
+Unpacking curl (7.52.1-5+deb9u9) ...
+Selecting previously unselected package libsasl2-modules:amd64.
+Preparing to unpack .../29-libsasl2-modules_2.1.27~101-g0780600+dfsg-3_amd64.deb ...
+Unpacking libsasl2-modules:amd64 (2.1.27~101-g0780600+dfsg-3) ...
+Selecting previously unselected package publicsuffix.
+Preparing to unpack .../30-publicsuffix_20190415.1030-0+deb9u1_all.deb ...
+Unpacking publicsuffix (20190415.1030-0+deb9u1) ...
+Setting up libnettle6:amd64 (3.3-1+b2) ...
+Setting up libnghttp2-14:amd64 (1.18.1-1) ...
+Setting up libldap-common (2.4.44+dfsg-5+deb9u2) ...
+Setting up libsasl2-modules-db:amd64 (2.1.27~101-g0780600+dfsg-3) ...
+Setting up libsasl2-2:amd64 (2.1.27~101-g0780600+dfsg-3) ...
+Setting up libtasn1-6:amd64 (4.10-1.1+deb9u1) ...
+Setting up libssl1.0.2:amd64 (1.0.2s-1~deb9u1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.24.1 /usr/local/share/perl/5.24.1 /usr/lib/x86_64-linux-gnu/perl5/5.24 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.24 /usr/share/perl/5.24 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base .) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up libgmp10:amd64 (2:6.1.2+dfsg-1) ...
+Setting up libssh2-1:amd64 (1.7.0-1+deb9u1) ...
+Setting up krb5-locales (1.15-1+deb9u1) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Setting up publicsuffix (20190415.1030-0+deb9u1) ...
+Setting up libunistring0:amd64 (0.9.6+really0.9.3-0.1) ...
+Setting up openssl (1.1.0k-1~deb9u1) ...
+Setting up libffi6:amd64 (3.2.1-6) ...
+Setting up libkeyutils1:amd64 (1.5.9-9) ...
+Setting up libsasl2-modules:amd64 (2.1.27~101-g0780600+dfsg-3) ...
+Setting up ca-certificates (20161130+nmu1+deb9u1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.24.1 /usr/local/share/perl/5.24.1 /usr/lib/x86_64-linux-gnu/perl5/5.24 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.24 /usr/share/perl/5.24 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base .) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Updating certificates in /etc/ssl/certs...
+151 added, 0 removed; done.
+Setting up libidn11:amd64 (1.33-1) ...
+Setting up libidn2-0:amd64 (0.16-1+deb9u1) ...
+Setting up libpsl5:amd64 (0.17.0-3) ...
+Setting up libkrb5support0:amd64 (1.15-1+deb9u1) ...
+Setting up libhogweed4:amd64 (3.3-1+b2) ...
+Setting up libp11-kit0:amd64 (0.23.3-2) ...
+Setting up libk5crypto3:amd64 (1.15-1+deb9u1) ...
+Setting up libgnutls30:amd64 (3.5.8-5+deb9u4) ...
+Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-1+b1) ...
+Setting up libldap-2.4-2:amd64 (2.4.44+dfsg-5+deb9u2) ...
+Setting up libkrb5-3:amd64 (1.15-1+deb9u1) ...
+Setting up libgssapi-krb5-2:amd64 (1.15-1+deb9u1) ...
+Setting up libcurl3:amd64 (7.52.1-5+deb9u9) ...
+Setting up curl (7.52.1-5+deb9u9) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Processing triggers for ca-certificates (20161130+nmu1+deb9u1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# curl localhost:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# curl 10.111.48.79:8888
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# curl 192.168.99.160:31001
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# curl hw-svc:8888
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# cat /etc/resolv.conf
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# nslookup hw-svc
+bash: nslookup: command not found
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# apt-get install nslookup
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package nslookup
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# apt-get install dnsutils
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  bind9-host libbind9-140 libcap2 libdns162 libisc160 libisccc140 libisccfg140 liblwres141
+Suggested packages:
+  rblcheck
+The following NEW packages will be installed:
+  bind9-host dnsutils libbind9-140 libcap2 libdns162 libisc160 libisccc140 libisccfg140
+  liblwres141
+0 upgraded, 9 newly installed, 0 to remove and 2 not upgraded.
+Need to get 2850 kB of archives.
+After this operation, 7535 kB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://cdn-fastly.deb.debian.org/debian stretch/main amd64 libcap2 amd64 1:2.25-1 [16.8 kB]
+Get:2 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 libisc160 amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [398 kB]
+Get:3 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 libdns162 amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [1078 kB]
+Get:4 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 libisccc140 amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [199 kB]
+Get:5 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 libisccfg140 amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [223 kB]
+Get:6 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 libbind9-140 amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [206 kB]
+Get:7 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 liblwres141 amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [214 kB]
+Get:8 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 bind9-host amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [231 kB]
+Get:9 http://security-cdn.debian.org/debian-security stretch/updates/main amd64 dnsutils amd64 1:9.10.3.dfsg.P4-12.3+deb9u5 [284 kB]
+Fetched 2850 kB in 5s (522 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2:amd64.
+(Reading database ... 7639 files and directories currently installed.)
+Preparing to unpack .../0-libcap2_1%3a2.25-1_amd64.deb ...
+Unpacking libcap2:amd64 (1:2.25-1) ...
+Selecting previously unselected package libisc160:amd64.
+Preparing to unpack .../1-libisc160_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking libisc160:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package libdns162:amd64.
+Preparing to unpack .../2-libdns162_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking libdns162:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package libisccc140:amd64.
+Preparing to unpack .../3-libisccc140_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking libisccc140:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package libisccfg140:amd64.
+Preparing to unpack .../4-libisccfg140_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking libisccfg140:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package libbind9-140:amd64.
+Preparing to unpack .../5-libbind9-140_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking libbind9-140:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package liblwres141:amd64.
+Preparing to unpack .../6-liblwres141_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking liblwres141:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package bind9-host.
+Preparing to unpack .../7-bind9-host_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking bind9-host (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Selecting previously unselected package dnsutils.
+Preparing to unpack .../8-dnsutils_1%3a9.10.3.dfsg.P4-12.3+deb9u5_amd64.deb ...
+Unpacking dnsutils (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up libcap2:amd64 (1:2.25-1) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Setting up liblwres141:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up libisc160:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up libisccc140:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up libdns162:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up libisccfg140:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up libbind9-140:amd64 (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up bind9-host (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Setting up dnsutils (1:9.10.3.dfsg.P4-12.3+deb9u5) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# nslookup hw-svc
+Server:         10.96.0.10#53
+Address:hw-svc.default.svc.cluster.local
+Address: 10.111.48.79
+
+root@helloworld-dep-6b5cd64d8d-5f9rz:/# cat /etc/resolv.conf
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+root@helloworld-dep-6b5cd64d8d-5f9rz:/#
