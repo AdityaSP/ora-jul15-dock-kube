@@ -1,0 +1,1 @@
+docker container run -d -p9090:8080 -v /vagrant/jenkins_home5:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /etc/kubernetes/admin.conf:/k8s/config -e KUBECONFIG=/k8s/config build-machine
