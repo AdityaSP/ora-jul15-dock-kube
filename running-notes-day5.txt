@@ -1,0 +1,177 @@
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+Dell lap@Dell ~
+λ kubectl get nodes
+NAME        STATUS   ROLES    AGE   VERSION
+k8smaster   Ready    master   18h   v1.15.0
+k8snode1    Ready    <none>   18h   v1.15.0
+Dell lap@Dell ~
+λ cd docker-workshop/jul15/ora-jul15-dock-kube/k8s/
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-549b6cfcc4-5mh4b   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-6nmxf   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-75ffk   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-cfr8d   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-f42fx   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-gl946   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-kllqp   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-m8n8v   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-s7bk9   1/1     Running   0          20m
+helloworld-dep-549b6cfcc4-z7znm   1/1     Running   0          20m
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                              READY   STATUS    RESTARTS   AGE   IP             NODE       NOMINATED NODE   READINESS GATES
+helloworld-dep-549b6cfcc4-5mh4b   1/1     Running   0          21m   192.168.1.76   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-6nmxf   1/1     Running   0          21m   192.168.1.73   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-75ffk   1/1     Running   0          21m   192.168.1.82   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-cfr8d   1/1     Running   0          21m   192.168.1.75   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-f42fx   1/1     Running   0          21m   192.168.1.74   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-gl946   1/1     Running   0          21m   192.168.1.78   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-kllqp   1/1     Running   0          21m   192.168.1.81   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-m8n8v   1/1     Running   0          21m   192.168.1.77   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-s7bk9   1/1     Running   0          21m   192.168.1.80   k8snode1   <none>           <none>
+helloworld-dep-549b6cfcc4-z7znm   1/1     Running   0          21m   192.168.1.79   k8snode1   <none>           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl scale deploy helloworld-dep --replicas 2
+deployment.extensions/helloworld-dep scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl apply -f service/svc-helloworld.yml
+service/hw-svc created
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe  service/hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"hw-svc","namespace":"default"},"spec":{"ports":[{"nodePort":31001...
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.101.57.59
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                192.168.1.73:80,192.168.1.75:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-549b6cfcc4-6nmxf   1/1     Running   0          49m
+helloworld-dep-549b6cfcc4-cfr8d   1/1     Running   0          49m
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get ns
+NAME              STATUS   AGE
+default           Active   19h
+kube-node-lease   Active   19h
+kube-public       Active   19h
+kube-system       Active   19h
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -n kube-system
+NAME                                READY   STATUS    RESTARTS   AGE
+canal-gpdq8                         3/3     Running   5          18h
+canal-zm2x9                         3/3     Running   5          18h
+coredns-5c98db65d4-dj7xx            1/1     Running   1          19h
+coredns-5c98db65d4-x2swc            1/1     Running   1          19h
+etcd-k8smaster                      1/1     Running   1          19h
+kube-apiserver-k8smaster            1/1     Running   3          19h
+kube-controller-manager-k8smaster   1/1     Running   2          19h
+kube-proxy-27zbr                    1/1     Running   1          19h
+kube-proxy-lbcck                    1/1     Running   1          19h
+kube-scheduler-k8smaster            1/1     Running   2          19h
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -n kube-system -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP              NODE
+   NOMINATED NODE   READINESS GATES
+canal-gpdq8                         3/3     Running   5          18h   192.167.10.70   k8smaster
+   <none>           <none>
+canal-zm2x9                         3/3     Running   5          18h   192.167.10.71   k8snode1
+   <none>           <none>
+coredns-5c98db65d4-dj7xx            1/1     Running   1          19h   192.168.1.72    k8snode1
+   <none>           <none>
+coredns-5c98db65d4-x2swc            1/1     Running   1          19h   192.168.1.71    k8snode1
+   <none>           <none>
+etcd-k8smaster                      1/1     Running   1          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-apiserver-k8smaster            1/1     Running   3          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-controller-manager-k8smaster   1/1     Running   2          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-proxy-27zbr                    1/1     Running   1          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-proxy-lbcck                    1/1     Running   1          19h   192.167.10.71   k8snode1
+   <none>           <none>
+kube-scheduler-k8smaster            1/1     Running   2          19h   192.167.10.70   k8smaster
+   <none>           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get deploy -n kube-system
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+coredns   2/2     2            2           19h
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get svc -n kube-system
+NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
+kube-dns   ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   19h
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl describe svc kube-dns -n kube-system
+Name:              kube-dns
+Namespace:         kube-system
+Labels:            k8s-app=kube-dns
+                   kubernetes.io/cluster-service=true
+                   kubernetes.io/name=KubeDNS
+Annotations:       prometheus.io/port: 9153
+                   prometheus.io/scrape: true
+Selector:          k8s-app=kube-dns
+Type:              ClusterIP
+IP:                10.96.0.10
+Port:              dns  53/UDP
+TargetPort:        53/UDP
+Endpoints:         192.168.1.71:53,192.168.1.72:53
+Port:              dns-tcp  53/TCP
+TargetPort:        53/TCP
+Endpoints:         192.168.1.71:53,192.168.1.72:53
+Port:              metrics  9153/TCP
+TargetPort:        9153/TCP
+Endpoints:         192.168.1.71:9153,192.168.1.72:9153
+Session Affinity:  None
+Events:            <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl scale deploy coredns -n kube-system --replicas 5
+deployment.extensions/coredns scaled
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ kubectl get pods -n kube-system -o wide
+NAME                                READY   STATUS    RESTARTS   AGE   IP              NODE
+   NOMINATED NODE   READINESS GATES
+canal-gpdq8                         3/3     Running   5          18h   192.167.10.70   k8smaster
+   <none>           <none>
+canal-zm2x9                         3/3     Running   5          18h   192.167.10.71   k8snode1
+   <none>           <none>
+coredns-5c98db65d4-7m9w8            0/1     Running   0          9s    192.168.0.33    k8smaster
+   <none>           <none>
+coredns-5c98db65d4-cgtnr            0/1     Running   0          9s    192.168.1.83    k8snode1
+   <none>           <none>
+coredns-5c98db65d4-dj7xx            1/1     Running   1          19h   192.168.1.72    k8snode1
+   <none>           <none>
+coredns-5c98db65d4-tlbwr            0/1     Running   0          9s    192.168.0.32    k8smaster
+   <none>           <none>
+coredns-5c98db65d4-x2swc            1/1     Running   1          19h   192.168.1.71    k8snode1
+   <none>           <none>
+etcd-k8smaster                      1/1     Running   1          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-apiserver-k8smaster            1/1     Running   3          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-controller-manager-k8smaster   1/1     Running   2          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-proxy-27zbr                    1/1     Running   1          19h   192.167.10.70   k8smaster
+   <none>           <none>
+kube-proxy-lbcck                    1/1     Running   1          19h   192.167.10.71   k8snode1
+   <none>           <none>
+kube-scheduler-k8smaster            1/1     Running   2          19h   192.167.10.70   k8smaster
+   <none>           <none>
+Dell lap@Dell ~/docker-workshop/jul15/ora-jul15-dock-kube/k8s (master)
+λ
